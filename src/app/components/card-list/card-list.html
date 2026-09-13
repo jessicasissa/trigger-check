@@ -1,0 +1,15 @@
+<h2>Carta selecionada randomicamente:</h2>
+@if (error()) {
+    <p class="text-danger"><i>{{ error() }}</i></p>
+}
+
+@if (isLoading()) {
+    <p class="text-muted">Procurando carta...</p>
+}
+
+@if (selectedCard()) {
+    <p>{{ selectedCard()?.name }}</p>
+    <img [src]="selectedCard()?.image" [alt]="selectedCard()?.name || 'Carta sem nome' ">
+} @else {
+    <p class="text-muted">Carta não encontrada.</p>
+}
