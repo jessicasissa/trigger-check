@@ -18,6 +18,13 @@ export class MtgService {
     );
   }
 
+  searchCardByName(name: string) {
+    return this.fetchCards (
+      `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`,
+      'Carta não encontrada. Verifique o nome e tente novamente.'
+    );
+  }
+
   private fetchCards(url: string, msg: string) {
     return this.httpClient.get<ScryfallResponse>(url)
       .pipe(
@@ -25,6 +32,7 @@ export class MtgService {
               id: resData.id,
               name: resData.name,
               image: resData.image_uris?.art_crop || 'https://placehold.co/300x200',
+              oracle_text: resData.oracle_text ?? '',
             })
         ),
         catchError((error) => {
