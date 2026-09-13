@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Card } from '../models/card';
 import { ScryfallResponse } from '../models/scryfall-response';
 import { catchError, map, throwError } from 'rxjs';
 
@@ -20,7 +19,7 @@ export class MtgService {
 
   searchCardByName(name: string) {
     return this.fetchCards (
-      `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name)}`,
+      `https://api.scryfall.com/cards/named?fuzzy=${encodeURIComponent(name.toLowerCase())}`,
       'Carta não encontrada. Verifique o nome e tente novamente.'
     );
   }
