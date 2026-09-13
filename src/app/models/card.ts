@@ -6,15 +6,7 @@ export interface Card {
 }
 
 export interface SavedCard extends Card {
+    uid: string, // para identificar a linha no front
     phase: string,
     savedAt: number
 }
-
-export const PHASES = [
-    'Upkeep',
-    'Draw',
-    'Main 1',
-    'Combat',
-    'Main 2',
-    'End Step'
-] as const;
