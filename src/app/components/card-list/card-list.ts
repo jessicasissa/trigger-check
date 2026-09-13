@@ -1,41 +1,49 @@
-import { Component, DestroyRef, inject, OnInit, signal } from '@angular/core';
+import { Component, inject, OnInit, signal } from '@angular/core';
 import { MtgService } from '../../services/mtg';
 import { Card } from '../../models/card';
-import { JsonPipe } from '@angular/common';
-
+import { FormsModule } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-card-list',
-  imports: [JsonPipe],
+  imports: [FormsModule],
   templateUrl: './card-list.html',
   styleUrl: './card-list.scss',
 })
-export class CardList implements OnInit {
+export class CardList {
   private mtgService = inject(MtgService);
-  private destroyRef = inject(DestroyRef);
   error = signal('');
   isLoading = signal(false);
   selectedCard = signal<Card|null> (null);
+  searchTerm = '';
+  subscription: Subscription | null = null;
 
-  ngOnInit() {
-    this.isLoading.set(true);
-    let card = this.mtgService.getRandomCard().subscribe({
+  onSearchTermChange(term: string) {
+    let query = '';
+
+    if (term.length > 0) {
+      query = term.trim().toLowerCase();
+      this.isLoading.set(true);
+    } else {
+      return;
+    }
+    
+    this.subscription?.unsubscribe();
+    this.subscription = this.mtgService.searchCardByName(query).subscribe({
       next: (dados) => {
         this.selectedCard.set(dados);
-      },
+      }, 
       error: (erro) => {
-        console.error('Erro ao acessar a API: ', erro);
-        this.error.set('Algo deu errado ao buscar uma carta. Tente novamente em alguns segundos!');
+        this.selectedCard.set(null);
+        this.isLoading.set(false);
+        console.error('Erro ao buscar carta: ', erro);
+        this.error.set(erro.message);
       },
       complete: () => {
-        // console.log('Carta encontrada com sucesso!');
         this.isLoading.set(false);
         this.error.set('');
       }
     });
 
-    this.destroyRef.onDestroy(() => {
-      card.unsubscribe();
-    });
   }
 }
