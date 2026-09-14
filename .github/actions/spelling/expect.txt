@@ -1,0 +1,5 @@
+mtg
+oracle_text
+scryfall
+upkeep
+uid

@@ -1,0 +1,25 @@
+name: Continuous Integration
+on: 
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:ci
+      - name: Check Spelling
+        uses: check-spelling/check-spelling@v0.0.26
+        with:
+          allow-hunspell: true
+          extra_dictionaries: cspell:pt_BR/src/hunspell/index.dic
+      - run: npm run build
