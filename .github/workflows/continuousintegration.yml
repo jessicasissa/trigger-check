@@ -1,0 +1,44 @@
+name: Continuous Integration
+on: 
+  push:
+    branches: [dev]
+  pull_request:
+    branches: [main]
+  workflow_call:
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository code
+        uses: actions/checkout@v4
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+      - run: npm ci
+      - run: npm run test:ci
+
+      - name: Check Spelling
+        uses: check-spelling/check-spelling@v0.0.26
+        with:
+          allow-hunspell: true
+          extra_dictionaries: 
+            cspell:pt_BR/src/hunspell/index.dic
+            cspell:html/dict/html.txt
+            cspell:filetypes/filetypes.txt
+            cspell:software-terms/dict/softwareTerms.txt
+            cspell:npm/dict/npm.txt
+            cspell:typescript/dict/typescript.txt
+            cspell:node/dict/node.txt
+
+      - name: Build project
+        run: npm run build
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: trigger-check-build-output      
+          path: ./dist/mtg-project/browser
+          retention-days: 7

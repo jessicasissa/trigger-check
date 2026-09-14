@@ -1,0 +1,9 @@
+^node_modules/
+^dist/
+^\.angular/
+^package-lock\.json$
+\.spec\.ts$
+\.d\.ts$
+^public/favicon\.ico$
+^src/app/app\.scss$
+^src/app/components/card-list/card-list\.scss$
