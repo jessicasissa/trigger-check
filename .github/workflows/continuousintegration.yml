@@ -17,14 +17,16 @@ jobs:
           cache: 'npm'
       - run: npm ci
       - run: npm run test:ci
+      - run: npm run build
       - name: Check Spelling
         uses: check-spelling/check-spelling@v0.0.26
         with:
           allow-hunspell: true
           extra_dictionaries: 
             cspell:pt_BR/src/hunspell/index.dic
+            cspell:html/dict/html.txt
+            cspell:filetypes/filetypes.txt
             cspell:software-terms/dict/softwareTerms.txt
             cspell:npm/dict/npm.txt
             cspell:typescript/dict/typescript.txt
             cspell:node/dict/node.txt
-      - run: npm run build
