@@ -1,0 +1,25 @@
+name: Continuous Deployment
+on: 
+  push:
+    branches: [main]
+permissions:
+  contents: write
+jobs:
+  run-ci:
+    uses: ./.github/workflows/continuousintegration.yml
+  deploy:
+    needs: run-ci
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download Build Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: trigger-check-build-output
+          path: ./public
+
+      - name: Deploy to Github Pages
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./public
+
