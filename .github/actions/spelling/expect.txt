@@ -1,5 +1,5 @@
-mtg
-oracle_text
+cspell
+hunspell
+oracle
 scryfall
-upkeep
 uid

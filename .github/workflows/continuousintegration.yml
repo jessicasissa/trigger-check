@@ -21,5 +21,10 @@ jobs:
         uses: check-spelling/check-spelling@v0.0.26
         with:
           allow-hunspell: true
-          extra_dictionaries: cspell:pt_BR/src/hunspell/index.dic
+          extra_dictionaries: 
+            cspell:pt_BR/src/hunspell/index.dic
+            cspell:software-terms/dict/softwareTerms.txt
+            cspell:npm/dict/npm.txt
+            cspell:typescript/dict/typescript.txt
+            cspell:node/dict/node.txt
       - run: npm run build
