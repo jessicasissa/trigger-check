@@ -3,6 +3,7 @@ bazel
 btn
 classpath
 continuousintegration
+dhi
 dic
 fwlink
 hunspell
@@ -10,9 +11,11 @@ libpeerconnection
 linkid
 mcp
 microsoft
+nginx
 peaceiris
 placehold
 screenshots
 scryfall
 typescriptlang
+WORKDIR
 workflows
