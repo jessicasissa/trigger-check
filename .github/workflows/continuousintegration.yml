@@ -42,3 +42,9 @@ jobs:
           name: trigger-check-build-output      
           path: ./dist/mtg-project/browser
           retention-days: 7
+          
+      - name: Actions Status Discord
+        uses: sarisia/actions-status-discord@v1.16.0
+        if: always()
+        with:
+          webhook: ${{ secrets.DISCORD_WEBHOOK }}
