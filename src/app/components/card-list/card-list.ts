@@ -19,16 +19,15 @@ export class CardList {
   subscription: Subscription | null = null;
 
   onSearchTermChange(term: string) {
-    let query = '';
+    let query = term.trim().toLowerCase();
 
-    if (term.length > 0) {
-      query = term.trim().toLowerCase();
-      this.isLoading.set(true);
-    } else {
+    if (query.length === 0) {
       return;
     }
     
+    this.isLoading.set(true);
     this.subscription?.unsubscribe();
+    
     this.subscription = this.mtgService.searchCardByName(query).subscribe({
       next: (dados) => {
         this.selectedCard.set(dados);
