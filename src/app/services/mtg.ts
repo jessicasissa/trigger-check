@@ -34,8 +34,7 @@ export class MtgService {
               oracle_text: resData.oracle_text ?? '',
             })
         ),
-        catchError((error) => {
-          console.log(error);
+        catchError(() => {
           return throwError(
             () => 
               new Error (msg)
